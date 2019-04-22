@@ -1,34 +1,60 @@
+use std::time::Instant;
+
 use crate::window;
 
-pub fn compute(window: &mut window::Window, max_iter: usize, zoom: f64) {
-    let width = window.width();
-    let height = window.height();
+pub struct Mandel {
+    pos: (f64, f64),
+    iter: usize,
+    zoom: f64,
+}
 
-    let x1 = -0.1011;
-    let y1 = 0.9563;
+impl Mandel {
+    pub fn new(x: f64, y: f64, iter: usize, zoom: f64) -> Self {
+        Mandel {
+            pos: (x, y),
+            iter,
+            zoom,
+        }
+    }
 
-    for y in 0..height {
-        for x in 0..width {
-            let c_r = x as f64 / zoom + x1;
-            let c_i = y as f64 / zoom + y1;
-            let mut z_r = 0.0;
-            let mut z_i = 0.0;
-            let mut i = 0;
+    pub fn compute(&self, window: &mut window::Window) {
+        let width = window.width();
+        let height = window.height();
 
-            while (z_r * z_r + z_i * z_i < 4.0) && i < max_iter {
-                let tmp = z_r;
-                z_r = z_r * z_r - z_i * z_i + c_r;
-                z_i = 2.0 * z_i * tmp + c_i;
-                i += 1;
-            }
+        let x1 = self.pos.0;
+        let y1 = self.pos.1;
 
-            if i == max_iter {
-                window.buffer[x + y * width] = 0x00FFFFFF;
-            } else {
-                let rapport = std::u32::MAX / max_iter as u32;
-                let i = i as u32 * rapport;
-                window.buffer[x + y * width] = i;
+        let now = Instant::now();
+
+        for y in 0..height {
+            for x in 0..width {
+                let c_r = x as f64 / self.zoom + x1;
+                let c_i = y as f64 / self.zoom + y1;
+                let mut z_r = 0.0;
+                let mut z_i = 0.0;
+                let mut i = 0;
+
+                while (z_r * z_r + z_i * z_i < 4.0) && i < self.iter {
+                    let tmp = z_r;
+                    z_r = z_r * z_r - z_i * z_i + c_r;
+                    z_i = 2.0 * z_i * tmp + c_i;
+                    i += 1;
+                }
+
+                if i == self.iter {
+                    window.buffer[x + y * width] = 0x00FFFFFF;
+                } else {
+                    let rapport = std::u32::MAX / self.iter as u32;
+                    let i = i as u32 * rapport;
+                    window.buffer[x + y * width] = i;
+                }
             }
         }
+
+        let duration = now.elapsed();
+        println!(
+            "{:.5} seconds for whatever you did.",
+            duration.as_secs() as f64 + duration.subsec_nanos() as f64 * 1e-9
+        );
     }
 }
