@@ -1,3 +1,6 @@
+use crate::mandel;
+use minifb::{Key, KeyRepeat};
+
 pub struct Window {
     window: minifb::Window,
     width: usize,
@@ -36,15 +39,82 @@ impl Window {
             .unwrap_or_else(|e| log::error!("Window update failed: {}", e));
     }
 
-    pub fn is_open(&self) -> bool {
-        self.window.is_open()
+    /// Update the mandel struct with the fetched event
+    /// The user want to exit if this function return false
+    pub fn handle_event(&mut self, mandel: &mut mandel::Mandel) -> bool {
+        let mut update = false;
+
+        while !update {
+            self.window.update(); // needed in order to fetch the new events
+
+            if !self.window.is_open() {
+                return false;
+            }
+            if self.window.is_key_down(Key::Escape) {
+                return false;
+            }
+
+            update |= self.handle_event_key(mandel);
+        }
+        update
     }
 
+    fn handle_event_key(&self, mandel: &mut mandel::Mandel) -> bool {
+        let mut update = false;
+        self.window.get_keys_pressed(KeyRepeat::Yes).map(|keys| {
+            for t in keys {
+                match t {
+                    Key::W => {
+                        mandel.pos.y -= (mandel.pos.y / mandel.zoom) * 10.0;
+                        update = true;
+                    }
+                    Key::S => {
+                        mandel.pos.y += (mandel.pos.y / mandel.zoom) * 10.0;
+                        update = true;
+                    }
+                    Key::A => {
+                        mandel.pos.x += (mandel.pos.x / mandel.zoom) * 100.0;
+                        update = true;
+                    }
+                    Key::D => {
+                        mandel.pos.x -= (mandel.pos.x / mandel.zoom) * 100.0;
+                        update = true;
+                    }
+                    Key::Space => {
+                        mandel.zoom += mandel.zoom / 10.0;
+                        update = true;
+                    }
+                    Key::X => {
+                        mandel.zoom -= mandel.zoom / 10.0;
+                        update = true;
+                    }
+                    Key::I => {
+                        mandel.iter += mandel.iter / 10;
+                        update = true;
+                    }
+                    Key::U => {
+                        mandel.iter -= mandel.iter / 10;
+                        update = true;
+                    }
+                    _ => (),
+                }
+            }
+        });
+        update
+    }
+
+    /// return the width of the window
     pub fn width(&self) -> usize {
         self.width
     }
 
+    /// return the height of the window
     pub fn height(&self) -> usize {
         self.height
+    }
+
+    /// return the size of the window -> (width, height)
+    pub fn size(&self) -> (usize, usize) {
+        (self.width, self.height)
     }
 }

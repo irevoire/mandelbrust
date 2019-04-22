@@ -9,9 +9,10 @@ fn main() {
     let mut window = window::Window::new(WIDTH, HEIGHT).unwrap();
 
     // init window
+    mandel.compute(&mut window);
     window.update();
 
-    while window.is_open() {
+    while window.handle_event(&mut mandel) {
         mandel.compute(&mut window);
 
         window.update();

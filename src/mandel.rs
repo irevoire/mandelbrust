@@ -2,16 +2,21 @@ use std::time::Instant;
 
 use crate::window;
 
+pub struct Pos {
+    pub x: f64,
+    pub y: f64,
+}
+
 pub struct Mandel {
-    pos: (f64, f64),
-    iter: usize,
-    zoom: f64,
+    pub pos: Pos,
+    pub iter: usize,
+    pub zoom: f64,
 }
 
 impl Mandel {
     pub fn new(x: f64, y: f64, iter: usize, zoom: f64) -> Self {
         Mandel {
-            pos: (x, y),
+            pos: Pos { x, y },
             iter,
             zoom,
         }
@@ -21,8 +26,8 @@ impl Mandel {
         let width = window.width();
         let height = window.height();
 
-        let x1 = self.pos.0;
-        let y1 = self.pos.1;
+        let x1 = self.pos.x;
+        let y1 = self.pos.y;
 
         let now = Instant::now();
 
