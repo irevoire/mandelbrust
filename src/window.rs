@@ -1,5 +1,6 @@
 use crate::mandel;
 use minifb::{Key, KeyRepeat};
+use std::{thread, time};
 
 pub struct Window {
     window: minifb::Window,
@@ -55,6 +56,7 @@ impl Window {
             }
 
             update |= self.handle_event_key(mandel);
+            thread::sleep(time::Duration::from_millis(50));
         }
         update
     }
