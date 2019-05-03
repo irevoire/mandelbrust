@@ -67,35 +67,35 @@ impl Window {
             for t in keys {
                 match t {
                     Key::W => {
-                        mandel.pos.y += (mandel.pos.y / mandel.zoom) * 10.0;
+                        mandel.pos.y -= 100.0 / mandel.zoom;
                         update = true;
                     }
                     Key::S => {
-                        mandel.pos.y -= (mandel.pos.y / mandel.zoom) * 10.0;
+                        mandel.pos.y += 100.0 / mandel.zoom;
                         update = true;
                     }
                     Key::A => {
-                        mandel.pos.x += (mandel.pos.x / mandel.zoom) * 100.0;
+                        mandel.pos.x -= 100.0 / mandel.zoom;
                         update = true;
                     }
                     Key::D => {
-                        mandel.pos.x -= (mandel.pos.x / mandel.zoom) * 100.0;
+                        mandel.pos.x += 100.0 / mandel.zoom;
                         update = true;
                     }
                     Key::Space => {
-                        mandel.zoom += mandel.zoom / 10.0;
+                        mandel.zoom *= 2.0;
                         update = true;
                     }
                     Key::X => {
-                        mandel.zoom -= mandel.zoom / 10.0;
+                        mandel.zoom /= 2.0;
                         update = true;
                     }
                     Key::I => {
-                        mandel.iter += mandel.iter / 10;
+                        mandel.iter += 10;
                         update = true;
                     }
                     Key::U => {
-                        mandel.iter -= mandel.iter / 10;
+                        mandel.iter -= 10;
                         update = true;
                     }
                     _ => (),
