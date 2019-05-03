@@ -56,7 +56,7 @@ impl Window {
             }
 
             update |= self.handle_event_key(mandel);
-            thread::sleep(time::Duration::from_millis(50));
+            thread::sleep(time::Duration::from_millis(10));
         }
         update
     }
@@ -83,19 +83,23 @@ impl Window {
                         update = true;
                     }
                     Key::Space => {
+                        mandel.pos.x += self.width as f64 * 0.25 / mandel.zoom;
+                        mandel.pos.y += self.height as f64 * 0.25 / mandel.zoom;
                         mandel.zoom *= 2.0;
                         update = true;
                     }
                     Key::X => {
                         mandel.zoom /= 2.0;
+                        mandel.pos.x -= self.width as f64 * 0.25 / mandel.zoom;
+                        mandel.pos.y -= self.height as f64 * 0.25 / mandel.zoom;
                         update = true;
                     }
                     Key::I => {
-                        mandel.iter += 10;
+                        mandel.iter += 3;
                         update = true;
                     }
                     Key::U => {
-                        mandel.iter -= 10;
+                        mandel.iter -= 3;
                         update = true;
                     }
                     _ => (),
