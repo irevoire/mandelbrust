@@ -66,19 +66,19 @@ impl Window {
         self.window.get_keys_pressed(KeyRepeat::Yes).map(|keys| {
             for t in keys {
                 match t {
-                    Key::W => {
+                    Key::W | Key::Z | Key::Up => {
                         mandel.pos.y -= 100.0 / mandel.zoom;
                         update = true;
                     }
-                    Key::S => {
+                    Key::S | Key::Down => {
                         mandel.pos.y += 100.0 / mandel.zoom;
                         update = true;
                     }
-                    Key::A => {
+                    Key::A | Key::Q | Key::Left => {
                         mandel.pos.x -= 100.0 / mandel.zoom;
                         update = true;
                     }
-                    Key::D => {
+                    Key::D | Key::Right => {
                         mandel.pos.x += 100.0 / mandel.zoom;
                         update = true;
                     }
