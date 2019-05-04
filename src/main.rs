@@ -1,3 +1,4 @@
+mod color;
 mod mandel;
 mod window;
 
