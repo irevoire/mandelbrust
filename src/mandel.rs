@@ -79,5 +79,5 @@ fn hue_to_rgb(hue: f32, saturation: f32, value: f32) -> u32 {
         _ => return 0,
     };
     let (r, g, b) = ((r + m) * 255.0, (g + m) * 255.0, (b + m) * 255.0);
-    (((r as u32) << 16) + ((g as u32) << 8)) + (b as u32)
+    ((r as u32) << 16) | ((g as u32) << 8) | (b as u32)
 }
