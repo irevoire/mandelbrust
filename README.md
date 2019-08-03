@@ -1,12 +1,12 @@
 # Mandelbrust
 
-![](base_mandel.png)
-![](mandel1.png)
-![](mandel2.png)
-![](mandel3.png)
-![](mandel4.png)
-![](mandel5.png)
-![](mandel_unzoomed.png)
+![](images/base_mandel.png)
+![](images/mandel1.png)
+![](images/mandel2.png)
+![](images/mandel3.png)
+![](images/mandel4.png)
+![](images/mandel5.png)
+![](images/mandel_unzoomed.png)
 
 This project draw a mandelbrot fractale.
 
