@@ -3,7 +3,7 @@
 | :-------------: |:-------------:|
 | ![](images/mandel1.png) | ![](images/mandel2.png) |
 | ![](images/mandel3.png) | ![](images/mandel4.png) |
-| ![](images/mandel5.png) | [![video of the code running](images/youtube-logo.jpg)](https://www.youtube.com/watch?v=M1ZCumoIALo) |
+| ![](images/mandel5.png) | [![video of the code running](images/youtube-logo.jpg)](https://youtu.be/bbgCG5Knd6k) |
 
 
 This project draw a mandelbrot fractale.
