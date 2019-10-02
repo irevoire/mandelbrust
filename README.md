@@ -1,10 +1,19 @@
 # Mandelbrust
-| ![multiple examples of what you can get with this repo](images/mandel_unzoomed.png) | ![](images/base_mandel.png) |
+| ![](images/mandel_unzoomed.png) | ![](images/base_mandel.png) |
 | :-------------: |:-------------:|
 | ![](images/mandel1.png) | ![](images/mandel2.png) |
 | ![](images/mandel3.png) | ![](images/mandel4.png) |
 | ![](images/mandel5.png) | [![video of the code running](images/youtube-logo.jpg)](https://youtu.be/bbgCG5Knd6k) |
 
+<style>
+table:nth-of-type(1) {
+    display:table;
+    width:100%;
+}
+table:nth-of-type(1) th {
+    width:40%;
+}
+</style>
 
 This project draw a mandelbrot fractale.
 
