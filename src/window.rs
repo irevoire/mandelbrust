@@ -118,9 +118,4 @@ impl Window {
     pub fn height(&self) -> usize {
         self.height
     }
-
-    /// return the size of the window -> (width, height)
-    pub fn size(&self) -> (usize, usize) {
-        (self.width, self.height)
-    }
 }
