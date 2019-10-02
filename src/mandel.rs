@@ -1,5 +1,6 @@
 use crate::color;
 use crate::window;
+use rayon::prelude::*;
 use std::time::Instant;
 
 pub struct Pos {
@@ -24,15 +25,20 @@ impl Mandel {
 
     pub fn compute(&self, window: &mut window::Window) {
         let width = window.width();
-        let height = window.height();
 
         let x1 = self.pos.x;
         let y1 = self.pos.y;
 
         let now = Instant::now();
 
-        for y in 0..height {
-            for x in 0..width {
+        window
+            .buffer
+            .par_iter_mut()
+            .enumerate()
+            .for_each(|(index, val)| {
+                let x = index % width;
+                let y = index / width;
+
                 let c_r = x as f64 / self.zoom + x1;
                 let c_i = y as f64 / self.zoom + y1;
                 let mut z_r = 0.0;
@@ -47,16 +53,15 @@ impl Mandel {
                 }
 
                 if i == self.iter {
-                    window.buffer[x + y * width] = 0x00000000;
+                    *val = 0x0000_0000;
                 } else {
-                    window.buffer[x + y * width] = color::hue_to_rgb(
+                    *val = color::hue_to_rgb(
                         i as f32 * (360.0 / self.iter as f32),
                         1.0,
                         i as f32 / self.iter as f32,
                     );
                 }
-            }
-        }
+            });
 
         let duration = now.elapsed();
         println!(
