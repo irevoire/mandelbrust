@@ -1,9 +1,9 @@
 # Mandelbrust
-| <img src="images/mandel_unzoomed.png" width="100vw"> | <img src="images/base_mandel.png" width="100vw"> |
+| <img src="images/mandel_unzoomed.png" width="200vw"> | <img src="images/base_mandel.png" width="200vw"> |
 | :-------------: |:-------------:|
-| <img src="images/mandel1.png" width="100vw"> | <img src="images/mandel2.png" width="100vw"> |
-| <img src="images/mandel3.png" width="100vw"> | <img src="images/mandel4.png" width="100vw"> |
-| <img src="images/mandel5.png" width="100vw"> | [<img src="images/youtube-logo.jpg" width="100vw">](https://youtu.be/bbgCG5Knd6k) |
+| <img src="images/mandel1.png" width="200vw"> | <img src="images/mandel2.png" width="200vw"> |
+| <img src="images/mandel3.png" width="200vw"> | <img src="images/mandel4.png" width="200vw"> |
+| <img src="images/mandel5.png" width="200vw"> | [<img src="images/youtube-logo.jpg" width="200vw">](https://youtu.be/bbgCG5Knd6k) |
 
 This project draw a mandelbrot fractale.
 
