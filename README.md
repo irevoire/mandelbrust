@@ -32,7 +32,7 @@ cargo run --release
 
 <style>
 table {
-    display:table;
+    display:hidden;
     width:100%;
 }
 table th {
