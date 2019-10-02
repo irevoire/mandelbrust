@@ -5,16 +5,6 @@
 | ![](images/mandel3.png) | ![](images/mandel4.png) |
 | ![](images/mandel5.png) | [![video of the code running](images/youtube-logo.jpg)](https://youtu.be/bbgCG5Knd6k) |
 
-<style>
-table:nth-of-type(1) {
-    display:table;
-    width:100%;
-}
-table:nth-of-type(1) th {
-    width:40%;
-}
-</style>
-
 This project draw a mandelbrot fractale.
 
 It use the `minifb` crate for the window / drawing.
@@ -39,3 +29,14 @@ cargo run --release
 - `space`: Zoom in the fractal
 - `x`: Unzoom the fractal
 - `escape`: Exit
+
+<style>
+table {
+    display:table;
+    width:100%;
+}
+table th {
+    width:40%;
+}
+</style>
+
