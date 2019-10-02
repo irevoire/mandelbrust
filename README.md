@@ -1,9 +1,9 @@
 # Mandelbrust
-| ![](images/mandel_unzoomed.png) | ![](images/base_mandel.png) |
+| ![](images/mandel_unzoomed.png | width=100) | ![](images/base_mandel.png | width=100) |
 | :-------------: |:-------------:|
-| ![](images/mandel1.png) | ![](images/mandel2.png) |
-| ![](images/mandel3.png) | ![](images/mandel4.png) |
-| ![](images/mandel5.png) | [![video of the code running](images/youtube-logo.jpg)](https://youtu.be/bbgCG5Knd6k) |
+| ![](images/mandel1.png | width=100) | ![](images/mandel2.png | width=100) |
+| ![](images/mandel3.png | width=100) | ![](images/mandel4.png | width=100) |
+| ![](images/mandel5.png | width=100) | [![video of the code running](images/youtube-logo.jpg | width=100)](https://youtu.be/bbgCG5Knd6k) |
 
 This project draw a mandelbrot fractale.
 
@@ -29,14 +29,3 @@ cargo run --release
 - `space`: Zoom in the fractal
 - `x`: Unzoom the fractal
 - `escape`: Exit
-
-<style>
-table {
-    display:hidden;
-    width:100%;
-}
-table th {
-    width:40%;
-}
-</style>
-
