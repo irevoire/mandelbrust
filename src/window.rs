@@ -36,7 +36,7 @@ impl Window {
 
     pub fn update(&mut self) {
         self.window
-            .update_with_buffer(&self.buffer)
+            .update_with_buffer(&self.buffer, self.width, self.height)
             .unwrap_or_else(|e| log::error!("Window update failed: {}", e));
     }
 
@@ -63,7 +63,7 @@ impl Window {
 
     fn handle_event_key(&self, mandel: &mut mandel::Mandel) -> bool {
         let mut update = false;
-        self.window.get_keys_pressed(KeyRepeat::Yes).map(|keys| {
+        if let Some(keys) = self.window.get_keys_pressed(KeyRepeat::Yes) {
             for t in keys {
                 match t {
                     Key::W | Key::Z | Key::Up => {
@@ -105,7 +105,7 @@ impl Window {
                     _ => (),
                 }
             }
-        });
+        };
         update
     }
 

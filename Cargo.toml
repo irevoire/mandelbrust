@@ -5,6 +5,6 @@ authors = ["Thomas Campistron <irevoire@hotmail.fr>"]
 edition = "2018"
 
 [dependencies]
-minifb = "*"
+minifb = "0.16.0"
 log = "*"
-rayon = "*"
+rayon = "1.3.0"
