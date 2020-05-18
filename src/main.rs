@@ -10,11 +10,15 @@ fn main() {
     let mut window = window::Window::new(WIDTH, HEIGHT).unwrap();
 
     // init window
-    mandel.compute(&mut window);
+    let (width, height) = window.dimension();
+    mandel.compute(&mut window.buffer, width, height);
+    color::convert_nb_to_rbg(mandel.iter, &mut window.buffer);
     window.update();
 
     while window.handle_event(&mut mandel) {
-        mandel.compute(&mut window);
+        let (width, height) = window.dimension();
+        mandel.compute(&mut window.buffer, width, height);
+        color::convert_nb_to_rbg(mandel.iter, &mut window.buffer);
 
         window.update();
     }

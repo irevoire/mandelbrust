@@ -118,4 +118,9 @@ impl Window {
     pub fn height(&self) -> usize {
         self.height
     }
+
+    /// return the dimensions of the window (width, height)
+    pub fn dimension(&self) -> (usize, usize) {
+        (self.width, self.height)
+    }
 }

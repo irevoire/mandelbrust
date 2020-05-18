@@ -14,3 +14,17 @@ pub fn hue_to_rgb(hue: f32, saturation: f32, value: f32) -> u32 {
     let (r, g, b) = ((r + m) * 255.0, (g + m) * 255.0, (b + m) * 255.0);
     ((r as u32) << 16) | ((g as u32) << 8) | (b as u32)
 }
+
+pub fn convert_nb_to_rbg(max: u32, window: &mut [u32]) {
+    window.iter_mut().for_each(|val| {
+        if *val == max {
+            *val = 0x0000_0000;
+        } else {
+            *val = hue_to_rgb(
+                *val as f32 * (360.0 / max as f32),
+                1.0,
+                *val as f32 / max as f32,
+            );
+        }
+    });
+}
