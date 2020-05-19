@@ -1,5 +1,5 @@
 use mandelbrust::Mandel;
-use minifb::{Key, KeyRepeat};
+use minifb::{Key, KeyRepeat, MouseButton, MouseMode};
 use std::time;
 
 pub struct Window {
@@ -67,6 +67,8 @@ impl Window {
     }
 
     fn handle_event_key(&self, mandel: &mut Mandel) -> Option<bool> {
+        let mut res = None;
+
         if let Some(keys) = self.window.get_keys_pressed(KeyRepeat::Yes) {
             for k in &keys {
                 match k {
@@ -102,11 +104,33 @@ impl Window {
                     _ => (),
                 }
             }
-            if keys.is_empty() {
-                return None;
+            if !keys.is_empty() {
+                res = Some(true);
             }
         };
-        Some(true)
+
+        if self.window.get_mouse_down(MouseButton::Left) {
+            self.window.get_mouse_pos(MouseMode::Clamp).map(|mouse| {
+                mandel.pos.x += mouse.0 as f64 * 0.5 / mandel.zoom;
+                mandel.pos.y += mouse.1 as f64 * 0.5 / mandel.zoom;
+            });
+            mandel.zoom *= 2.0;
+            res = Some(true);
+        }
+        if self.window.get_mouse_down(MouseButton::Right) {
+            self.window.get_mouse_pos(MouseMode::Clamp).map(|mouse| {
+                mandel.pos.x -= mouse.0 as f64 * 0.75 / mandel.zoom;
+                mandel.pos.y -= mouse.1 as f64 * 0.75 / mandel.zoom;
+            });
+            res = Some(true);
+            mandel.zoom /= 2.0;
+        }
+        if let Some((x, y)) = self.window.get_scroll_wheel() {
+            mandel.pos.x -= x as f64 * 10. / mandel.zoom;
+            mandel.pos.y -= y as f64 * 10. / mandel.zoom;
+            res = Some(true);
+        }
+        res
     }
 
     /// return the dimensions of the window (width, height)
