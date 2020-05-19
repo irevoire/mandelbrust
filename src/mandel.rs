@@ -1,4 +1,4 @@
-// use rayon::prelude::*;
+use rayon::prelude::*;
 
 pub struct Pos {
     pub x: f64,
@@ -24,24 +24,25 @@ impl Mandel {
         let x1 = self.pos.x;
         let y1 = self.pos.y;
 
-        window.iter_mut().enumerate().for_each(|(index, val)| {
-            let x = index % width;
-            let y = index / width;
+        let mut chunks: Vec<&mut [u32]> = window.chunks_mut(width).collect();
+        chunks.par_iter_mut().enumerate().for_each(|(index, val)| {
+            let y = index;
+            for x in 0..width {
+                let c_r = x as f64 / self.zoom + x1;
+                let c_i = y as f64 / self.zoom + y1;
+                let mut z_r = 0.0;
+                let mut z_i = 0.0;
+                let mut i = 0;
 
-            let c_r = x as f64 / self.zoom + x1;
-            let c_i = y as f64 / self.zoom + y1;
-            let mut z_r = 0.0;
-            let mut z_i = 0.0;
-            let mut i = 0;
+                while (z_r * z_r + z_i * z_i < 4.0) && i < self.iter {
+                    let tmp = z_r;
+                    z_r = z_r * z_r - z_i * z_i + c_r;
+                    z_i = 2.0 * z_i * tmp + c_i;
+                    i += 1;
+                }
 
-            while (z_r * z_r + z_i * z_i < 4.0) && i < self.iter {
-                let tmp = z_r;
-                z_r = z_r * z_r - z_i * z_i + c_r;
-                z_i = 2.0 * z_i * tmp + c_i;
-                i += 1;
+                val[x] = i;
             }
-
-            *val = i;
         });
     }
 }
