@@ -8,6 +8,8 @@ edition = "2018"
 minifb = "0.16.0"
 log = "*"
 rayon = "1.3.0"
+faster = { git = "https://github.com/AdamNiederer/faster" }
+packed_simd = "*"
 
 [[bench]]
 name = "mandel"
