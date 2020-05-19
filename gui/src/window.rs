@@ -96,10 +96,13 @@ impl Window {
                         mandel.pos.y -= self.height as f64 * 0.25 / mandel.zoom;
                     }
                     Key::I => {
-                        mandel.iter += 3;
+                        mandel.iter *= 2;
                     }
                     Key::U => {
-                        mandel.iter -= 3;
+                        mandel.iter /= 2;
+                        if mandel.iter == 0 {
+                            mandel.iter = 1;
+                        }
                     }
                     _ => (),
                 }
