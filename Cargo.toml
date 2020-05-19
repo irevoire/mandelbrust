@@ -18,4 +18,3 @@ criterion = "0.3"
 
 [workspace]
 members = ["gui"]
-default-members = ["gui"]
