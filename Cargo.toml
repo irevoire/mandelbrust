@@ -1,5 +1,5 @@
 [package]
-name = "mandelbrüst"
+name = "mandelbrust"
 version = "0.1.0"
 authors = ["Thomas Campistron <irevoire@hotmail.fr>"]
 edition = "2018"
@@ -8,3 +8,10 @@ edition = "2018"
 minifb = "0.16.0"
 log = "*"
 rayon = "1.3.0"
+
+[[bench]]
+name = "mandel"
+harness = false
+
+[dev-dependencies]
+criterion = "0.3"
