@@ -1,6 +1,6 @@
 use mandelbrust::Mandel;
 use minifb::{Key, KeyRepeat};
-use std::{thread, time};
+use std::time;
 
 pub struct Window {
     window: minifb::Window,
@@ -16,7 +16,7 @@ impl Window {
             width,
             height,
             minifb::WindowOptions {
-                resize: false, // TODO allow resize
+                resize: true,
                 scale: minifb::Scale::X1,
                 ..minifb::WindowOptions::default()
             },
@@ -24,10 +24,12 @@ impl Window {
         if let Err(e) = window {
             return Err(format!("Unable to create window {}", e));
         };
+        let mut window = window.unwrap();
+        window.limit_update_rate(Some(time::Duration::from_secs(1) / 30));
 
         Ok(Window {
             // if the window creation fail we exit everything
-            window: window.unwrap(),
+            window,
             width,
             height,
             buffer: vec![0; width * height],
@@ -43,70 +45,68 @@ impl Window {
     /// Update the mandel struct with the fetched event
     /// The user want to exit if this function return false
     pub fn handle_event(&mut self, mandel: &mut Mandel) -> bool {
-        let mut update = false;
-
-        while !update {
+        loop {
             self.window.update(); // needed in order to fetch the new events
 
             if !self.window.is_open() {
                 return false;
             }
-            if self.window.is_key_down(Key::Escape) {
-                return false;
+
+            let (width, height) = self.window.get_size();
+            if width != self.width || height != self.height {
+                self.width = width;
+                self.height = height;
+                self.buffer.resize(self.width * self.height, 0);
+                return true;
             }
 
-            update |= self.handle_event_key(mandel);
-            thread::sleep(time::Duration::from_millis(10));
+            if let Some(b) = self.handle_event_key(mandel) {
+                return b;
+            }
         }
-        update
     }
 
-    fn handle_event_key(&self, mandel: &mut Mandel) -> bool {
-        let mut update = false;
+    fn handle_event_key(&self, mandel: &mut Mandel) -> Option<bool> {
         if let Some(keys) = self.window.get_keys_pressed(KeyRepeat::Yes) {
-            for t in keys {
-                match t {
+            for k in &keys {
+                match k {
+                    Key::Escape => return Some(false),
                     Key::W | Key::Z | Key::Up => {
                         mandel.pos.y -= 100.0 / mandel.zoom;
-                        update = true;
                     }
                     Key::S | Key::Down => {
                         mandel.pos.y += 100.0 / mandel.zoom;
-                        update = true;
                     }
                     Key::A | Key::Q | Key::Left => {
                         mandel.pos.x -= 100.0 / mandel.zoom;
-                        update = true;
                     }
                     Key::D | Key::Right => {
                         mandel.pos.x += 100.0 / mandel.zoom;
-                        update = true;
                     }
                     Key::Space => {
                         mandel.pos.x += self.width as f64 * 0.25 / mandel.zoom;
                         mandel.pos.y += self.height as f64 * 0.25 / mandel.zoom;
                         mandel.zoom *= 2.0;
-                        update = true;
                     }
                     Key::X => {
                         mandel.zoom /= 2.0;
                         mandel.pos.x -= self.width as f64 * 0.25 / mandel.zoom;
                         mandel.pos.y -= self.height as f64 * 0.25 / mandel.zoom;
-                        update = true;
                     }
                     Key::I => {
                         mandel.iter += 3;
-                        update = true;
                     }
                     Key::U => {
                         mandel.iter -= 3;
-                        update = true;
                     }
                     _ => (),
                 }
             }
+            if keys.is_empty() {
+                return None;
+            }
         };
-        update
+        Some(true)
     }
 
     /// return the dimensions of the window (width, height)
