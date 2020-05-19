@@ -1,4 +1,4 @@
-use crate::mandel;
+use mandelbrust::Mandel;
 use minifb::{Key, KeyRepeat};
 use std::{thread, time};
 
@@ -37,12 +37,12 @@ impl Window {
     pub fn update(&mut self) {
         self.window
             .update_with_buffer(&self.buffer, self.width, self.height)
-            .unwrap_or_else(|e| log::error!("Window update failed: {}", e));
+            .unwrap_or_else(|e| eprintln!("Window update failed: {}", e));
     }
 
     /// Update the mandel struct with the fetched event
     /// The user want to exit if this function return false
-    pub fn handle_event(&mut self, mandel: &mut mandel::Mandel) -> bool {
+    pub fn handle_event(&mut self, mandel: &mut Mandel) -> bool {
         let mut update = false;
 
         while !update {
@@ -61,7 +61,7 @@ impl Window {
         update
     }
 
-    fn handle_event_key(&self, mandel: &mut mandel::Mandel) -> bool {
+    fn handle_event_key(&self, mandel: &mut Mandel) -> bool {
         let mut update = false;
         if let Some(keys) = self.window.get_keys_pressed(KeyRepeat::Yes) {
             for t in keys {
@@ -107,16 +107,6 @@ impl Window {
             }
         };
         update
-    }
-
-    /// return the width of the window
-    pub fn width(&self) -> usize {
-        self.width
-    }
-
-    /// return the height of the window
-    pub fn height(&self) -> usize {
-        self.height
     }
 
     /// return the dimensions of the window (width, height)

@@ -1,4 +1,7 @@
-use mandelbrust::{color, Mandel, Window};
+mod window;
+
+use mandelbrust::{color, Mandel};
+use window::Window;
 
 const HEIGHT: usize = 800;
 const WIDTH: usize = 800;
